@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="633.0" style="-fx-background-color: white; -fx-border-color: rgba(201, 59, 206, 0.53); -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Reminder.reminderController">
+   <children>
+      <TextField fx:id="timeField" layoutX="23.0" layoutY="377.0" prefHeight="31.0" prefWidth="164.0" promptText="hh:mm (24 hour format)">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <TextField fx:id="taskField" layoutX="219.0" layoutY="377.0" prefHeight="31.0" prefWidth="376.0" promptText="Task" />
+      <Separator layoutX="203.0" layoutY="366.0" orientation="VERTICAL" prefHeight="52.0" prefWidth="5.0" />
+      <TableView fx:id="tableView" layoutX="26.0" layoutY="85.0" prefHeight="278.0" prefWidth="564.0" style="-fx-background-color: white; -fx-border-color: black;">
+        <columns>
+          <TableColumn fx:id="timeColumn" prefWidth="181.0" style="-fx-color: white;" text="Time" />
+          <TableColumn fx:id="taskColumn" prefWidth="411.0" style="-fx-color: white;" text="Task" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Text fill="#c9c0c0" layoutX="601.0" layoutY="30.0" onMouseClicked="#closeReminderManager" onMouseEntered="#changeCloseTextColorToRed" onMouseExited="#changeCloseTextColorToNormal" strokeType="OUTSIDE" strokeWidth="0.0" text=" X" wrappingWidth="35.84375">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Label layoutX="231.0" layoutY="22.0" text="Reminder List">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <Separator layoutX="26.0" layoutY="63.0" prefHeight="5.0" prefWidth="564.0" />
+      <Label fx:id="confirmationLabel" layoutX="19.0" layoutY="421.0" prefHeight="22.0" prefWidth="467.0" style="-fx-text-fill: #37474F;" text="....">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="525.0" layoutY="420.0" onMouseClicked="#setNewTask" ripplerFill="#a5a3e1cf" style="-fx-background-color: #263238;" text="Create" textFill="WHITE" />
+   </children>
+</AnchorPane>
