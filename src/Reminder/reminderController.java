@@ -1,6 +1,6 @@
 package Reminder;
 
-import javafx.application.Platform;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -11,17 +11,11 @@ import javafx.scene.effect.Blend;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-
-import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public class reminderController {
@@ -43,13 +37,14 @@ public class reminderController {
     @FXML
     Label confirmationLabel;
 
+    @FXML
+    JFXTimePicker timePicker;
+
     ObservableList<ReminderTasks> tasksObservableList;
     private Stage stage;
 
     public void initialize() {
         tasksObservableList = getObservableList();
-
-//        timeColumn.setStyle("-");
 
         timeColumn.setCellValueFactory(new PropertyValueFactory<ReminderTasks, String>("time"));
         taskColumn.setCellValueFactory(new PropertyValueFactory<ReminderTasks, String>("task"));
@@ -89,8 +84,9 @@ public class reminderController {
     }
 
     public void setNewTask(Event e){
-        String time = timeField.getText();
         String task = taskField.getText();
+        String time = timePicker.getEditor().getText();
+        time = convertTo24hourFormat(time);
 
         if (time.equals("") || task.equals("")) {
             confirmationLabel.setText("Something is not right..");
@@ -99,6 +95,11 @@ public class reminderController {
 
         ReminderTaskManager.setNewReminder(time, task);
         refreshObservableList(time, task);
+    }
+
+    private String convertTo24hourFormat(String time) {
+        String proper24HourFormat = LocalTime.parse("03:34 PM", DateTimeFormatter.ofPattern("hh:mm a")).toString();
+        return proper24HourFormat;
     }
 
     public void refreshObservableList(String time, String task){

@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class ReminderTaskManager {
      */
     public static void main(String[] args) {
 //        System.out.println(ReminderTaskManager.markReminderComplete("07:06"));
-        System.out.println(LocalTime.now().isBefore(LocalTime.parse("19:34")));
+
 
     }
 
@@ -35,11 +36,15 @@ public class ReminderTaskManager {
     public static HashMap<String,HashMap<String,String>> getReminders() {
 
         JSONObject reminders = getRemindersForEveryDay();
-        String curDate = LocalDate.now().toString();
+        if (reminders != null) {
+            String curDate = LocalDate.now().toString();
+            JSONObject remindersForCurrentDay = (JSONObject) reminders.get(curDate);
 
-        JSONObject remindersForCurrentDay = (JSONObject) reminders.get(curDate);
-
-        return remindersForCurrentDay;
+            return remindersForCurrentDay;
+        }
+        else{
+            return null;
+        }
     }
 
     /**

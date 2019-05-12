@@ -4,11 +4,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -70,8 +68,6 @@ public class ReminderDialogUI extends Application{
                 primaryStage.setY(event.getScreenY()-y);
             }
         });
-
-
 
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
