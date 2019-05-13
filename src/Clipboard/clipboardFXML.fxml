@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="790.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Clipboard.ClipboardController">
+   <children>
+      <ListView fx:id="clipboardItems" layoutX="19.0" layoutY="81.0" onMouseClicked="#onListItemClicked" prefHeight="367.0" prefWidth="753.0" style="-fx-font-size: 19;" />
+      <Label layoutX="246.0" layoutY="14.0" prefHeight="43.0" prefWidth="265.0" text="Clipboard History">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="738.0" layoutY="14.0" onAction="#closeApp" prefHeight="23.0" prefWidth="14.0" ripplerFill="#b20707" text="X" textFill="#d76767">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </JFXButton>
+      <AnchorPane layoutX="26.0" layoutY="40.0" onMouseClicked="#refreshObservableList" prefHeight="16.0" prefWidth="26.0">
+         <children>
+            <SVGPath content="M5 18c4.667 4.667 12 1.833 12-4.042h-3l5-6 5 6h-3c-1.125 7.98-11.594 11.104-16 4.042zm14-11.984c-4.667-4.667-12-1.834-12 4.041h3l-5 6-5-6h3c1.125-7.979 11.594-11.104 16-4.041z" layoutX="2.0" layoutY="9.0" onMouseClicked="#refreshObservableList">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#20b548" />
+                        <Stop color="#0fe139" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </SVGPath>
+         </children>
+      </AnchorPane>
+      <JFXButton layoutX="610.0" layoutY="448.0" onMouseClicked="#deleteSelectedClips" text="Delete" />
+      <JFXButton layoutX="702.0" layoutY="448.0" text="Clear all" />
+   </children>
+</AnchorPane>
