@@ -2,6 +2,7 @@ package Main;
 
 import Dialogs.ReminderDialogUI;
 import Reminder.ReminderTaskManager;
+import Clipboard.ClipboardUI;
 
 import animatefx.animation.*;
 import javafx.animation.*;
@@ -10,13 +11,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -33,11 +33,11 @@ public class timerController {
     private Stage stage;
 
     @FXML
-    Circle reminderApp;
+    AnchorPane reminderApp;
     @FXML
-    Circle screenshotApp;
+    AnchorPane screenshotApp;
     @FXML
-    Circle clipboardApp;
+    AnchorPane clipboardApp;
 
     @FXML
     AnchorPane timeLayout;
@@ -46,19 +46,33 @@ public class timerController {
     public void initialize() {
 
         TimeHandler timeHandler = new TimeHandler(hourLabel, minuteLabel, timeLayout);
+        ClipboardHandler clipboardHandler = new ClipboardHandler();
+
 
         Timeline clock = new Timeline(new KeyFrame(Duration.millis(500), e -> {
             timeHandler.handleTime();
-        }) );
+        }),new KeyFrame(Duration.seconds(1),e->{
+            clipboardHandler.setNewClip();
+        }));
 
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+
     }
 
-
-
-    public void showMessage(String message) {
-        Dialogs.ReminderDialogUI.initDialog(message);
+    @FXML
+    public void initClipboardApp(Event e){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ClipboardUI clipboardUI = new ClipboardUI();
+                    clipboardUI.start(new Stage());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 
     @FXML
@@ -148,7 +162,7 @@ class TimeHandler{
         int minute = LOCAL_TIME.getMinute();
         int seconds = LOCAL_TIME.getSecond();
         if(minute == 0 && seconds == 0){
-            new Flash(layout).setSpeed(0.1).play();
+            new Shake(layout).play();
         }
 
     }
@@ -201,3 +215,5 @@ class TimeHandler{
     }
 
 }
+
+

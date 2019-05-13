@@ -41,7 +41,7 @@ public class ClipboardHandler {
         }
     }
 
-    private void setNewClip() {
+    public void setNewClip() {
         String clip = getClip();
         initConnection();
         if (!isClipSameAsBefore(clip)) {

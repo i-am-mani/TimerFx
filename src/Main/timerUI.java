@@ -62,14 +62,10 @@ public class timerUI extends Application {
 
         primaryStage.setX(mid_x-100);
         primaryStage.setY(0);
-
-
-
+        primaryStage.getIcons().add(new Image("file:icons/clock.png"));
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
     }
 }
 
