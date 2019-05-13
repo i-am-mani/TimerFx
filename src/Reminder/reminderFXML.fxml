@@ -11,14 +11,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="633.0" style="-fx-background-color: white; -fx-border-color: rgba(201, 59, 206, 0.53); -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Reminder.reminderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="633.0" style="-fx-background-color: white; -fx-border-color: rgba(201, 59, 206, 0.53); -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Reminder.reminderController">
    <children>
-      <TextField fx:id="timeField" layoutX="39.0" layoutY="21.0" prefHeight="31.0" prefWidth="164.0" promptText="hh:mm (24 hour format)">
-         <font>
-            <Font size="13.0" />
-         </font></TextField>
-      <TextField fx:id="taskField" layoutX="219.0" layoutY="377.0" prefHeight="31.0" prefWidth="376.0" promptText="Task" />
-      <Separator layoutX="203.0" layoutY="366.0" orientation="VERTICAL" prefHeight="52.0" prefWidth="5.0" />
+      <TextField fx:id="taskField" layoutX="219.0" layoutY="377.0" prefHeight="31.0" prefWidth="376.0" promptText="Reminder Message" style="-fx-background-color: transparent; -fx-border-color: transparent transparent black transparent;" />
+      <Separator layoutX="198.0" layoutY="377.0" orientation="VERTICAL" prefHeight="45.0" prefWidth="3.0" />
       <TableView fx:id="tableView" layoutX="26.0" layoutY="85.0" prefHeight="278.0" prefWidth="564.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-font-size: 18;">
         <columns>
           <TableColumn fx:id="timeColumn" prefWidth="181.0" style="-fx-color: white;" text="Time" />
@@ -44,7 +40,7 @@
             <Font size="19.0" />
          </font>
       </Label>
+      <JFXTimePicker fx:id="timePicker" layoutX="26.0" layoutY="377.0" prefHeight="31.0" prefWidth="156.0" promptText="Set Time" />
       <JFXButton buttonType="RAISED" layoutX="525.0" layoutY="420.0" onMouseClicked="#setNewTask" ripplerFill="#a5a3e1cf" style="-fx-background-color: #263238;" text="Create" textFill="WHITE" />
-      <JFXTimePicker fx:id="timePicker" layoutX="26.0" layoutY="377.0" prefHeight="31.0" prefWidth="156.0" />
    </children>
 </AnchorPane>

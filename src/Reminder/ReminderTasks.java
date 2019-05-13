@@ -1,11 +1,15 @@
 package Reminder;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class ReminderTasks {
 
     public String time, task;
 
     ReminderTasks(String time, String task) {
-        this.time = time;
+
+        this.time = LocalTime.parse(time).format(DateTimeFormatter.ofPattern("hh:mm"));
         this.task = task;
     }
 

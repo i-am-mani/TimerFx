@@ -13,7 +13,6 @@ import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -30,8 +29,6 @@ public class reminderController {
     TableView tableView;
 
     @FXML
-    TextField timeField;
-    @FXML
     TextField taskField;
 
     @FXML
@@ -44,14 +41,13 @@ public class reminderController {
     private Stage stage;
 
     public void initialize() {
+
         tasksObservableList = getObservableList();
 
         timeColumn.setCellValueFactory(new PropertyValueFactory<ReminderTasks, String>("time"));
         taskColumn.setCellValueFactory(new PropertyValueFactory<ReminderTasks, String>("task"));
 
         tableView.setItems(tasksObservableList);
-
-
     }
 
     private ObservableList<ReminderTasks> getObservableList() {
@@ -95,10 +91,18 @@ public class reminderController {
 
         ReminderTaskManager.setNewReminder(time, task);
         refreshObservableList(time, task);
+        setFieldsBlank();
+    }
+
+    private void setFieldsBlank() {
+        taskField.clear();
+        timePicker.getEditor().clear();
     }
 
     private String convertTo24hourFormat(String time) {
-        String proper24HourFormat = LocalTime.parse("03:34 PM", DateTimeFormatter.ofPattern("hh:mm a")).toString();
+
+
+        String proper24HourFormat = LocalTime.parse(time, DateTimeFormatter.ofPattern("h:mm a")).toString();
         return proper24HourFormat;
     }
 

@@ -1,17 +1,23 @@
 package Reminder;
 
+import javafx.scene.input.Clipboard;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.HashMap;
 import java.util.Random;
+
 
 public class ReminderTaskManager {
 
@@ -21,9 +27,10 @@ public class ReminderTaskManager {
      * Driver function.
      * @param args
      */
-    public static void main(String[] args) {
-//        System.out.println(ReminderTaskManager.markReminderComplete("07:06"));
-
+    public static void main(String[] args) throws AWTException, IOException {
+//        Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+//        BufferedImage capture = new Robot().createScreenCapture(screenRect);
+//        ImageIO.write(capture, "png", new File("Eg.png"));
 
     }
 
