@@ -5,15 +5,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+
 
 public class ClipboardController {
 
@@ -82,6 +81,10 @@ public class ClipboardController {
             arrayList.add(rowid);
         }
         ClipboardHandler.deleteClips(arrayList);
+    }
+
+    public void deleteAllClips() {
+        ClipboardHandler.deleteAllClips();
     }
 
 

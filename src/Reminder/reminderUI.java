@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 
 public class reminderUI extends Application {
     double x,y;
+    private Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -18,10 +19,11 @@ public class reminderUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("reminderFXML.fxml"));
-        Parent root= (Parent) loader.load();
+        Parent root = loader.load();
 
-        reminderController reminderController = (reminderController) loader.getController();
+        reminderController reminderController = loader.getController();
         reminderController.setStage(primaryStage);
 
         Scene scene= new Scene(root);
@@ -46,5 +48,9 @@ public class reminderUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    public void closeApp() {
+        stage.close();
     }
 }

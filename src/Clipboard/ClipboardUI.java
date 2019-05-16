@@ -1,7 +1,6 @@
 package Clipboard;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +12,7 @@ import javafx.stage.StageStyle;
 
 public class ClipboardUI extends Application {
     double x,y;
+    Stage stage;
     public static void main(String[] args) {
         launch();
     }
@@ -20,9 +20,9 @@ public class ClipboardUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        stage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("clipboardFXML.fxml"));
-        Parent root= (Parent) loader.load();
+        Parent root = loader.load();
 
         ClipboardController clipboardController = loader.getController();
         clipboardController.setStage(primaryStage);
@@ -48,11 +48,14 @@ public class ClipboardUI extends Application {
             }
         });
 
-
         primaryStage.centerOnScreen();
         primaryStage.getIcons().add(new Image("file:icons/scissors.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    public void closeApp() {
+        stage.close();
     }
 }

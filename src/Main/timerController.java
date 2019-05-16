@@ -1,19 +1,17 @@
 package Main;
 
+import Clipboard.ClipboardUI;
 import Dialogs.ReminderDialogUI;
 import Reminder.ReminderTaskManager;
-import Clipboard.ClipboardUI;
-
-import animatefx.animation.*;
-import javafx.animation.*;
+import animatefx.animation.Shake;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
-import javafx.scene.input.Clipboard;
 import javafx.scene.layout.AnchorPane;
-
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -43,6 +41,11 @@ public class timerController {
     AnchorPane timeLayout;
 
     @FXML
+    Reminder.reminderUI reminder;
+
+    private ClipboardUI clipboardUI;
+
+    @FXML
     public void initialize() {
 
         TimeHandler timeHandler = new TimeHandler(hourLabel, minuteLabel, timeLayout);
@@ -62,11 +65,14 @@ public class timerController {
 
     @FXML
     public void initClipboardApp(Event e){
+        if (clipboardUI != null) {
+            clipboardUI.closeApp();
+        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ClipboardUI clipboardUI = new ClipboardUI();
+                    clipboardUI = new ClipboardUI();
                     clipboardUI.start(new Stage());
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -96,15 +102,16 @@ public class timerController {
 
     @FXML
     public void initReminderApp(Event e){
+        if (reminder != null) {
+            reminder.closeApp();
+        }
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new Reminder.reminderUI().start(new Stage());
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+        Platform.runLater(() -> {
+            try {
+                reminder = new Reminder.reminderUI();
+                reminder.start(new Stage());
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
         });
 

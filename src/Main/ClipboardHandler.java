@@ -2,13 +2,17 @@ package Main;
 
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
+import util.Log;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class ClipboardHandler {
+
+    private final static Logger LOGGER = Log.getLogger(ClipboardHandler.class.getName());
 
     private static Connection connection;
     private static Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -122,6 +126,16 @@ public class ClipboardHandler {
         return null;
     }
 
+    public static void deleteAllClips() {
+        try {
+            String query = "DELETE from ClipboardHistory";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            int rowAffected = preparedStatement.executeUpdate();
+            LOGGER.info("Rows Affected = " + String.valueOf(rowAffected));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     private static void deleteRow(String rowid) {
 
         try{
