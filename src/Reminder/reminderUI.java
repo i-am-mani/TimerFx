@@ -50,7 +50,11 @@ public class reminderUI extends Application {
 
     }
 
-    public void closeApp() {
-        stage.close();
+    public void toFront() {
+        stage.toFront();
+    }
+
+    public boolean isShowing() {
+        return stage.isShowing();
     }
 }
