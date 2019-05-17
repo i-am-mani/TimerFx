@@ -15,12 +15,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import util.Log;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class timerController {
+
+    private final static Logger log = Log.getLogger(timerController.class.getName());
 
     @FXML
     Label hourLabel;
@@ -86,44 +90,50 @@ public class timerController {
 
     @FXML
     public void initClipboardApp(Event e){
-        if (clipboardUI != null) {
-            clipboardUI.closeApp();
-        }
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    clipboardUI = new ClipboardUI();
-                    clipboardUI.start(new Stage());
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+
+        if (clipboardUI != null && clipboardUI.isShowing()) {
+            log.info("bring current clipboard instance to front");
+            clipboardUI.toFront();
+        } else {
+            log.info("creating new clipboard instance");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        clipboardUI = new ClipboardUI();
+                        clipboardUI.start(new Stage());
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 
 
     @FXML
     public void initReminderApp(Event e){
-        if (reminder != null) {
-            reminder.closeApp();
-        }
+        if (reminder != null && reminder.isShowing()) {
+            reminder.toFront();
+        } else {
 
-        Platform.runLater(() -> {
-            try {
-                reminder = new Reminder.reminderUI();
-                reminder.start(new Stage());
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
+            Platform.runLater(() -> {
+                try {
+                    reminder = new Reminder.reminderUI();
+                    reminder.start(new Stage());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            });
+        }
 
     }
 
     @FXML
     public void initScreenshot(Event event) {
-        if (screenshot != null) {
+        if (screenshot != null && screenshot.isShowing()) {
+
             screenshot.toFront();
         } else {
             Platform.runLater(() -> {
