@@ -1,6 +1,7 @@
 package Clipboard;
 
 import Main.ClipboardHandler;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -8,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -24,26 +27,30 @@ public class ClipboardController {
     private Stage stage;
 
     public void initialize() {
-        clipObservableList = getObservableList();
-        clipboardItems.setItems(clipObservableList);
-        clipboardItems.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        Platform.runLater(() -> {
+            clipObservableList = getObservableList();
 
-        clipboardItems.setCellFactory(param -> new ListCell<Clip>() {
+            clipboardItems.setItems(clipObservableList);
+            clipboardItems.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            clipboardItems.setCellFactory(param -> new ListCell<Clip>() {
 
-            @Override
-            public void updateItem(Clip item, boolean empty) {
-                super.updateItem(item, empty);
-                String val = null;
-                if (item == null || empty) {
+                @Override
+                public void updateItem(Clip item, boolean empty) {
+                    super.updateItem(item, empty);
+                    String val = null;
 
-                } else {
-                    val = item.getValue();
+                    if (item == null || empty) {
+
+                    } else {
+                        val = item.getValue();
+                    }
+                    setText(val);
+                    setGraphic(null);
+
                 }
-                setText(val);
-                setGraphic(null);
-
-            }
+            });
         });
+
     }
 
     private ObservableList<Clip> getObservableList() {
@@ -54,23 +61,41 @@ public class ClipboardController {
             HashMap<String, String> hashMap = clipboardHistory.get(rowid);
             String datetime = hashMap.get("datetime");
             String value = hashMap.get("value");
-            observableList.add(new Clip(rowid, datetime, value));
+            observableList.add(0, new Clip(rowid, datetime, value));
         }
 
         return observableList;
     }
 
-    public void onListItemClicked(Event e){
-        StringBuilder copiedContent = new StringBuilder();
-        ObservableList selectedItems = clipboardItems.getSelectionModel().getSelectedItems();
-        for (Object selectedItem : selectedItems) {
-            Clip clip = (Clip)selectedItem;
-            String value = clip.getValue();
-            copiedContent.append(value);
-            copiedContent.append("\n");
+    /**
+     * All Selected List Cells will be copied to the System ClipBoard, it removes previous occurrences of the
+     * Selected cells. The copied cells will be display at top of clipboard.
+     *
+     * @param e
+     */
+    public void onListItemClicked(MouseEvent e) {
+        if (e.getButton().equals(MouseButton.PRIMARY)) {
+            if (e.getClickCount() == 2) {
+                StringBuilder copiedContent = new StringBuilder();
+                ObservableList selectedItems = clipboardItems.getSelectionModel().getSelectedItems();
+                for (Object selectedItem : selectedItems) {
+
+                    Clip clip = (Clip) selectedItem;
+
+                    //remove from existing clipboard
+                    ClipboardHandler.deleteRow(clip.getRowid());
+
+                    //copy to clipboard
+                    String value = clip.getValue();
+                    copiedContent.append(value);
+                    copiedContent.append("\n");
+                }
+                ClipboardHandler.setClipboard(copiedContent.toString());
+                refresh();
+            }
         }
-        ClipboardHandler.setClipboard(copiedContent.toString());
     }
+
 
     public void deleteSelectedClips() {
         ObservableList selectedItems = clipboardItems.getSelectionModel().getSelectedItems();
@@ -81,15 +106,21 @@ public class ClipboardController {
             arrayList.add(rowid);
         }
         ClipboardHandler.deleteClips(arrayList);
+        refresh();
     }
 
     public void deleteAllClips() {
         ClipboardHandler.deleteAllClips();
+        refresh();
     }
 
+    @FXML
+    public void refreshObservableList(Event e) {
+        refresh();
+    }
 
-    public void refreshObservableList(Event e){
-        System.out.println("refreshed");
+    private void refresh() {
+        clipObservableList.clear();
         clipObservableList.setAll(getObservableList());
     }
 
