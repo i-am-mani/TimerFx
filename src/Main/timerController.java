@@ -3,6 +3,7 @@ package Main;
 import Clipboard.ClipboardUI;
 import Dialogs.ReminderDialogUI;
 import Reminder.ReminderTaskManager;
+import Screenshot.ScreenshotApp;
 import animatefx.animation.Shake;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -40,10 +41,13 @@ public class timerController {
     @FXML
     AnchorPane timeLayout;
 
-    @FXML
-    Reminder.reminderUI reminder;
+
+    private Reminder.reminderUI reminder;
 
     private ClipboardUI clipboardUI;
+
+    private ScreenshotApp screenshot;
+
 
     @FXML
     public void initialize() {
@@ -64,6 +68,23 @@ public class timerController {
     }
 
     @FXML
+    public void fadeOutTimer(Event e) {
+        reminderApp.setVisible(false);
+        screenshotApp.setVisible(false);
+        clipboardApp.setVisible(false);
+        mainLayout.setStyle("-fx-background-color:transparent");
+
+    }
+
+    @FXML
+    public void fadeInTimer(Event e) {
+        reminderApp.setVisible(true);
+        screenshotApp.setVisible(true);
+        clipboardApp.setVisible(true);
+        mainLayout.setStyle(" -fx-background : rgba(38, 50, 56,0.1)");
+    }
+
+    @FXML
     public void initClipboardApp(Event e){
         if (clipboardUI != null) {
             clipboardUI.closeApp();
@@ -79,23 +100,6 @@ public class timerController {
                 }
             }
         });
-    }
-
-    @FXML
-    public void fadeOutTimer(Event e){
-        reminderApp.setVisible(false);
-        screenshotApp.setVisible(false);
-        clipboardApp.setVisible(false);
-        mainLayout.setStyle("-fx-background-color:transparent");
-
-    }
-
-    @FXML
-    public void fadeInTimer(Event e){
-        reminderApp.setVisible(true);
-        screenshotApp.setVisible(true);
-        clipboardApp.setVisible(true);
-        mainLayout.setStyle(" -fx-background : rgba(38, 50, 56,0.1)");
     }
 
 
@@ -114,6 +118,23 @@ public class timerController {
                 e1.printStackTrace();
             }
         });
+
+    }
+
+    @FXML
+    public void initScreenshot(Event event) {
+        if (screenshot != null) {
+            screenshot.toFront();
+        } else {
+            Platform.runLater(() -> {
+                try {
+                    screenshot = new ScreenshotApp();
+                    screenshot.start(new Stage());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            });
+        }
 
     }
 
