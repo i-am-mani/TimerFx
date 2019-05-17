@@ -41,7 +41,7 @@ public class ScreenshotApp extends Application {
             AnchorPane root = new AnchorPane();
 
             Rectangle rect = createDraggableRectangle(200, 200, 400, 300);
-            rect.setFill(Color.WHITE);
+            rect.setFill(Color.LIGHTBLUE);
 
             root.getChildren().add(rect);
 
@@ -49,8 +49,13 @@ public class ScreenshotApp extends Application {
             Scene scene = new Scene(root, 800, 800);
             scene.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.SPACE) {
-                    stage.setIconified(true);
+                    stage.toBack();
                     captureScreenShot((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+                }
+            });
+            scene.setOnKeyReleased(event -> {
+                if (event.getCode() == KeyCode.SPACE) {
+                    stage.toFront();
                 }
             });
 
@@ -204,6 +209,9 @@ public class ScreenshotApp extends Application {
         stage.toFront();
     }
 
+    public boolean isShowing() {
+        return stage.isShowing();
+    }
     static class Wrapper<T> {
         T value;
     }
