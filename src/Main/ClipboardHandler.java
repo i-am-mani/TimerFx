@@ -20,10 +20,11 @@ public class ClipboardHandler {
 
     private static void initConnection() {
         try {
-
-            String url = "jdbc:sqlite:TimerFx.db";
-            connection = DriverManager.getConnection(url);
-
+            if (connection == null) {
+                String url = "jdbc:sqlite:TimerFx.db";
+                connection = DriverManager.getConnection(url);
+                createTable();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,11 +36,13 @@ public class ClipboardHandler {
         clipboard.setContent(hashMap);
     }
 
-    private void createTable() {
-        String query = "Create Table ClipboardHistory(date TEXT,time TEXT,value TEXT)";
+    private static void createTable() {
+        String query = "Create Table if not exists ClipboardHistory(datetime TEXT,value TEXT)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.execute();
+            int i = preparedStatement.executeUpdate();
+            LOGGER.info(i!=0?"New table Created" :" Existing table is used");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
