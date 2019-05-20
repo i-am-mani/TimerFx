@@ -49,7 +49,6 @@ public class ClipboardHandler {
         String clip = getClip();
         initConnection();
         if (!isClipSameAsBefore(clip)) {
-            System.out.println("New Clip " + clip);
             addClipToDb(clip);
         }
     }
@@ -71,9 +70,14 @@ public class ClipboardHandler {
     }
 
     private boolean isClipSameAsBefore(String clip) {
-        boolean r = clip.equals(prevValue);
-        prevValue = clip;
-        return r;
+        if (clip != null) {
+            boolean r = clip.equals(prevValue);
+            prevValue = clip;
+            return r;
+        }
+        else{
+            return false;
+        }
     }
 
     private String getClip() {
@@ -117,7 +121,6 @@ public class ClipboardHandler {
 
                 hashMap.put(rowid, rowHashMap);
             }
-            System.out.println(hashMap);
             return hashMap;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -136,7 +139,7 @@ public class ClipboardHandler {
             e.printStackTrace();
         }
     }
-    private static void deleteRow(String rowid) {
+    public static void deleteRow(String rowid) {
 
         try{
             String query = "Delete from ClipboardHistory where rowid=?";
