@@ -4,7 +4,7 @@ import Clipboard.ClipboardUI;
 import Dialogs.ReminderDialogUI;
 import Reminder.ReminderTaskManager;
 import Screenshot.ScreenshotApp;
-import animatefx.animation.Shake;
+import animatefx.animation.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,6 +13,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.Log;
@@ -41,6 +42,15 @@ public class timerController {
     AnchorPane screenshotApp;
     @FXML
     AnchorPane clipboardApp;
+
+    @FXML
+    SVGPath clipboardSVG;
+
+    @FXML
+    SVGPath screenshotSVG;
+
+    @FXML
+    SVGPath remindersSVG;
 
     @FXML
     AnchorPane timeLayout;
@@ -90,6 +100,7 @@ public class timerController {
 
     @FXML
     public void initClipboardApp(Event e){
+        new RollIn(clipboardSVG).play();
 
         if (clipboardUI != null && clipboardUI.isShowing()) {
             log.info("bring current clipboard instance to front");
@@ -108,12 +119,15 @@ public class timerController {
                 }
             });
         }
+
     }
 
 
 
     @FXML
     public void initReminderApp(Event e){
+        new RollIn(remindersSVG).play();
+
         if (reminder != null && reminder.isShowing()) {
             reminder.toFront();
         } else {
@@ -132,6 +146,7 @@ public class timerController {
 
     @FXML
     public void initScreenshot(Event event) {
+        new RollIn(screenshotSVG).play();
         if (screenshot != null && screenshot.isShowing()) {
 
             screenshot.toFront();
