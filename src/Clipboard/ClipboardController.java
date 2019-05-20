@@ -71,29 +71,42 @@ public class ClipboardController {
      * All Selected List Cells will be copied to the System ClipBoard, it removes previous occurrences of the
      * Selected cells. The copied cells will be display at top of clipboard.
      *
-     * @param e
+     * @param e MouseEvent object
      */
     public void onListItemClicked(MouseEvent e) {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
             if (e.getClickCount() == 2) {
-                StringBuilder copiedContent = new StringBuilder();
-                ObservableList selectedItems = clipboardItems.getSelectionModel().getSelectedItems();
-                for (Object selectedItem : selectedItems) {
-
-                    Clip clip = (Clip) selectedItem;
-
-                    //remove from existing clipboard
-                    ClipboardHandler.deleteRow(clip.getRowid());
-
-                    //copy to clipboard
-                    String value = clip.getValue();
-                    copiedContent.append(value);
-                    copiedContent.append("\n");
-                }
-                ClipboardHandler.setClipboard(copiedContent.toString());
+                String copiedContent = getStringFromObservableList(clipboardItems.getSelectionModel().getSelectedItems());
+                ClipboardHandler.setClipboard(copiedContent);
                 refresh();
             }
         }
+    }
+
+
+    public void copyAllCellsToClipboard(MouseEvent mouseEvent) {
+        String stringFromObservableList = getStringFromObservableList(clipObservableList);
+        ClipboardHandler.setClipboard(stringFromObservableList);
+        refresh();
+    }
+
+    public String getStringFromObservableList(ObservableList observableList) {
+        StringBuilder copiedContent = new StringBuilder();
+
+        for (Object selectedItem : observableList) {
+
+            Clip clip = (Clip) selectedItem;
+
+            //remove from existing clipboard
+            ClipboardHandler.deleteRow(clip.getRowid());
+
+            //copy to clipboard
+            String value = clip.getValue();
+            copiedContent.append(value);
+            copiedContent.append("\n");
+        }
+
+        return copiedContent.toString();
     }
 
 
