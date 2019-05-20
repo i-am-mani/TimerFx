@@ -35,6 +35,7 @@ public class ClipboardHandler {
         HashMap<DataFormat, Object> hashMap = new HashMap<>();
         hashMap.put(DataFormat.PLAIN_TEXT, value);
         clipboard.setContent(hashMap);
+
     }
 
     public static void setImageClipboard(Image imageClipboard){
@@ -73,6 +74,7 @@ public class ClipboardHandler {
             preparedStatement.setString(1, date);
             preparedStatement.setString(2, clip);
 
+            LOGGER.info("Added new clips " + clip);
             int count = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,13 +82,14 @@ public class ClipboardHandler {
     }
 
     private boolean isClipSameAsBefore(String clip) {
-        if (clip != null) {
+        if(clip == null || clip.length() < 0){
+            return true;
+        }
+        else{
             boolean r = clip.equals(prevValue);
             prevValue = clip;
             return r;
-        }
-        else{
-            return false;
+
         }
     }
 
