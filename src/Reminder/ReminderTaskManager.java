@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -138,7 +139,17 @@ public class ReminderTaskManager {
 
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(JSON_FILE_NAME));
+
+            File file = new File(JSON_FILE_NAME);
+            //Create new JSON file if, file with given name doesn't exists.
+            if(file.createNewFile()){
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("{}");
+                fileWriter.close();
+            }
+
+
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(file));
 
             return jsonObject;
 
