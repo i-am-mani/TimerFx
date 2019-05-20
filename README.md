@@ -1,4 +1,8 @@
-# Welcome to the **TimerFx **!
+# :hourglass_flowing_sand: Welcome to the  TimerFx :hourglass_flowing_sand:
+
+
+
+
 
 
 ## TimerFx is a Desktop Application which always stays on top of every windows, at the center-top of the screen.
@@ -54,3 +58,5 @@ Maintains Reminders for day and Shows Pop-up Window on specified time.
 ![TimerFx Reminder manager](https://github.com/llGOKUll/TimerFx/blob/master/demo-images/reminder.gif)
 
 
+## Thank you
+### :blush:
