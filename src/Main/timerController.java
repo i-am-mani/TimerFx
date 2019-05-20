@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
@@ -78,7 +79,6 @@ public class timerController {
 
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-
     }
 
     @FXML
@@ -166,7 +166,7 @@ public class timerController {
 
     @FXML
     public void close(Event e){
-        stage.close();
+        Platform.exit();
     }
 
 
@@ -214,7 +214,8 @@ class TimeHandler{
         int hour = LOCAL_TIME.getHour();
         int minute = LOCAL_TIME.getMinute();
         int seconds = LOCAL_TIME.getSecond();
-        if(minute == 0 && seconds == 0){
+        //Vibrate the timer every 20 mins
+        if(minute == 20 && seconds == 0){
             new Shake(layout).play();
         }
 
@@ -243,7 +244,6 @@ class TimeHandler{
         }
         else if (LOCAL_TIME.isAfter(shortestReminderTime)) {
             ReminderTaskManager.markReminderComplete(time);
-            System.out.println("REMINDER_CheckReminder");
         }
     }
 
