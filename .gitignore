@@ -1,3 +1,5 @@
 
 *.iml
 /.idea/
+/reminder.json
+/TimerFx.db
