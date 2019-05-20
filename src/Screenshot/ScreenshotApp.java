@@ -1,10 +1,12 @@
 package Screenshot;
 
+import Main.ClipboardHandler;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -18,6 +20,7 @@ import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -194,10 +197,18 @@ public class ScreenshotApp extends Application {
     public void captureScreenShot(int x, int y, int width, int height) {
         java.awt.Rectangle screenRect = new java.awt.Rectangle(x, y, width, height);
         String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyy-hhmmss.SSS"));
-        try {
+        String fileName = "img-" + datetime + ".png";
+        String dirName = "screenshots";
+        File file = new File(dirName+"/"+fileName);
+        file.mkdirs();
+    try {
             BufferedImage capture = new Robot().createScreenCapture(screenRect);
-            ImageIO.write(capture, "png", new File("img-" + datetime + ".png"));
-            log.info("Screenshot Captured");
+            ImageIO.write(capture, "png", file );
+            log.info("Screenshot Captured,path = "+file.toString());
+
+            Image image = new Image("file:"+file.toString());
+            ClipboardHandler.setImageClipboard(image);
+            log.info("Copied to clipboard");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AWTException e) {

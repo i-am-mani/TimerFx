@@ -1,5 +1,6 @@
 package Main;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
 import util.Log;
@@ -33,6 +34,12 @@ public class ClipboardHandler {
     public static void setClipboard(String value) {
         HashMap<DataFormat, Object> hashMap = new HashMap<>();
         hashMap.put(DataFormat.PLAIN_TEXT, value);
+        clipboard.setContent(hashMap);
+    }
+
+    public static void setImageClipboard(Image imageClipboard){
+        HashMap<DataFormat, Object> hashMap = new HashMap<>();
+        hashMap.put(DataFormat.IMAGE,imageClipboard);
         clipboard.setContent(hashMap);
     }
 
